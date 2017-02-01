@@ -222,6 +222,15 @@ open class JTAppleCalendarLayout: UICollectionViewLayout, JTAppleCalendarLayoutP
         return CGSize(width: contentWidth, height: contentHeight)
     }
 
+    /// Ensures that data is reloaded when this view changes size/hape
+    open override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+        if let cv = collectionView, cv.bounds.size != newBounds.size {
+            clearCache()
+            return true
+        }
+        return false
+    }
+
     /// Returns the layout attributes for all of the cells
     /// and views in the specified rectangle.
     override open func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
